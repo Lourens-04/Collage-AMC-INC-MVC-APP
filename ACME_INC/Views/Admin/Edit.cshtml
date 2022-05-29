@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Product</h2>
+@foreach (var item in ViewBag.Products)
+{
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="PIURL" value="@item.ProductImageURL" />
+                    <div class="form-group">
+                        <strong> Add Item Name </strong>
+                        <input name="productName" class="form-control" value="@item.ProductName"  />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong>Add Item Description</strong>
+                        <textarea name="ProductDesc" class="form-control">@item.ProductDesc</textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong> Add Item Price</strong>
+                        <input name="ProductPrice" type="number" class="form-control" value="@item.ProductPrice"  />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong>Add Item Image</strong>
+                        <input name="image" type="file" value="Select Image" accept="image/*"  />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong> Add Item Name </strong>
+                        <select name="productCategory" class="form-control" asp-items="ViewBag.CategoryNames"></select>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <a asp-action="StoreContent">Back to page</a>      |
+                        <input type="submit" value="Edit" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+    }
+}

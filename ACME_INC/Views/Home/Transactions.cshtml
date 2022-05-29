@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Transaction";
+}
+
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        width: 100%;
+        margin: 20px;
+        text-align: center;
+        height: 100%;
+        border-radius: 10px 10px 10px 10px;
+    }
+</style>
+
+<h2>Transaction</h2>
+
+    @{
+        string oderNum = "";
+        double oderTotal = 0;
+
+        foreach (var r in ViewBag.Dates)
+        {
+            string[] dt = r.Split(" ");
+            
+            <div class="card">
+                <p></p>
+                <h1 style="text-align:center; margin-top:10px">Order placed on @dt[0]</h1>
+                @foreach (var item in ViewBag.Transactions)
+                {
+                    if (item.Productdate == r)
+                    {
+                        <p><strong>Item:</strong> @item.ProductName</p>
+                        oderTotal = Math.Round(Convert.ToDouble(item.ProductTotal), 2);
+                        oderNum = item.ProductorderID;
+                    }
+                }
+
+                <p><strong>Order Refrence:</strong> @oderNum</p>
+
+                <p><strong>Order Full Date:</strong> @r</p>
+
+                <p><strong>Total:</strong> R @oderTotal</p>
+                <p></p>
+            </div>
+        }
+    }
+
+
+

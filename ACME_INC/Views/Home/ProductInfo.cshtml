@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Product Info";
+}
+
+<style>
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+</style>
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var uToken = HttpContextAccessor.HttpContext.Request.Cookies["UserToken"];
+    var uCart = HttpContextAccessor.HttpContext.Request.Cookies["Cart"];
+
+    string[] productsInCart = null;
+
+    if (uCart != null)
+    {
+        productsInCart = uCart.ToString().Split(";");
+    }
+
+    Boolean check = false;
+}
+
+@foreach (var p in ViewBag.Products)
+{
+    <h2 style="text-align:center; padding-bottom:50px">Product Info</h2>
+
+    <img src="@p.ProductImageURL" height="300" width="600" class="center"/>
+
+    <p style="padding-bottom:20px; padding-top:40px; font-size:large"><strong>Name:</strong> @p.ProductName</p>
+    <p style="padding-bottom:20px; font-size:large"><strong>Description:</strong> @p.ProductDesc</p>
+    <p style="padding-bottom:20px; font-size:large"><strong>Price:</strong> R @Math.Round(Convert.ToDouble(p.ProductPrice), 2)</p>
+
+    <form method="post">
+        @if (uCart != null)
+        {
+            foreach (var pIC in productsInCart)
+            {
+                if (pIC == p.ProductID)
+                {
+                    <button class="btn btn-default" asp-action="Index">Back to Home Page</button>
+                    <button class="btn btn-default" asp-action="RemoveFromCart" asp-route-id="@p.ProductID">Remove from Cart</button>
+                    check = true;
+                }
+            }
+
+            if (check != true)
+            {
+                <button class="btn btn-default" asp-action="Index">Back to Home Page</button>
+                <button class="btn btn-default" asp-action="AddToCart" asp-route-id="@p.ProductID">Add to Cart</button>
+            }
+            else
+            {
+                check = false;
+            }
+        }
+        else
+        {
+            <button class="btn btn-default" asp-action="Index">Back to Home Page</button>
+            <button class="btn btn-default" asp-action="AddToCart" asp-route-id="@p.ProductID">Add to Cart</button>
+        }
+    </form>
+ }

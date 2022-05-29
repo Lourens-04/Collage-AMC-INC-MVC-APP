@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<h2>LogIn</h2>
+
+<span style="color:red"> @ViewBag.Error</span>
+<form action="/LogInAndSignUp/LogIn" method="post">
+    <table style="width:50%">
+        <tr style="height:40px">
+            <td>Username</td>
+            <td>@Html.TextBox("tbxUserEmail", null, new { @class = "form-control", @Style = "background-color:whitesmoke" })</td>
+            <td>&nbsp</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Password</td>
+            <td> @Html.Password("tbxUserPassword", null, new { @class = "form-control", @Style = "background-color:whitesmoke" }) </td>
+            <td>&nbsp</td>
+        </tr>
+        <tr style="height:40px">
+            <td>&nbsp</td>
+            <td> <input id="btnSubmit" type="submit" value="Log In" class="btn btn-default" style="background-color:whitesmoke" /> </td>
+            <td>&nbsp</td>
+        </tr>
+    </table>
+</form>
+

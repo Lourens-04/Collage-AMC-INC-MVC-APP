@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Add Item</h2>
+
+@using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <strong> Add Item Name </strong>
+                    <input name="productName" class="form-control" required />
+                    <span  class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <strong>Add Item Description</strong>
+                    <textarea name="ProductDesc" class="form-control" required></textarea>
+                    <span  class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <strong> Add Item Price</strong>
+                    <input name="ProductPrice" type="number" class="form-control" required min="1" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <strong>Add Item Image</strong>
+                    <input name="image" type="file" value="Select Image" accept="image/*" required />
+                    <span  class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <strong> Add Item Category </strong>
+                    <select name="productCategory"  class="form-control" asp-items="ViewBag.CategoryNames"></select>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-action="StoreContent">Back to page</a>      |
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+}

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "Store Products";
+}
+
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 1000px;
+        margin: 20px;
+        text-align: center;
+        float: left;
+        max-height: 1000px;
+        border-radius: 10px 10px 10px 10px;
+    }
+</style>
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<h2>Store Products</h2>
+
+@using (Html.BeginForm("SearchResults", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <form class="navbar-form">
+        <div class="input-group" style="width:400px; padding-top: 8px">
+            <input type="text" class="form-control" placeholder=" Search..." name="search" id="search">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+}
+
+<form method="get">
+    <button class="btn btn-default" asp-action="Create" style="float:right">Add New Product</button>
+</form>
+
+<br />
+<br />
+<br />
+
+@foreach (var item in ViewBag.Products)
+{
+    <div class="card">
+        <p></p>
+
+        <img src="@item.ProductImageURL" height="180" width="340" />
+
+        <h1>@item.ProductName</h1>
+
+        <p> R @Math.Round(Convert.ToDouble(item.ProductPrice), 2)</p>
+
+        <a asp-action="ProductInfo" asp-route-id="@item.ProductID">View Product</a> ||
+        <a asp-action="Edit" asp-route-id="@item.ProductID">Edit Product</a>
+
+        <p></p>
+    </div>
+}
+
+<div style="clear: left">
+
+</div>
+
+
